@@ -5,27 +5,16 @@ import (
 )
 
 func main() {
-    stones := [][]int{
-        {0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0},
-    }
-
-    first_board_display()
+    s := new(stones)
+    first_board_display(s)
 
     for i := 0; i < 40; i++{
-        stones = user_set_stones(stones)
-        board_display(stones)
+        s = user_set_stones(s)
+        display_board(s)
 
-        time.Sleep(2 * time.Second)
-        stones = com_set_stones(stones)
-        board_display(stones)
+        time.Sleep(1 * time.Second)
+        s = com_set_stones(s)
+        display_board(s)
     }
 }
 
