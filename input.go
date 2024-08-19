@@ -7,7 +7,7 @@ import (
     "strconv"
 )
 
-func com_set_stones (s *stones) *stones {
+func com_set_stones (s *stones) (int,int) {
     // list up empty place
     var positions []struct{ i, j int }
     for i, row := range s {
@@ -21,11 +21,10 @@ func com_set_stones (s *stones) *stones {
     // set com stone random
     rand.Seed(time.Now().UnixNano())
     pos := positions[rand.Intn(len(positions))]
-    s[pos.i][pos.j] = 2
-    return s
+    return pos.i, pos.j
 }
 
-func user_set_stones (s *stones) *stones {
+func user_set_stones (s *stones) (int,int) {
     var input string
     for {
         // input
@@ -47,8 +46,7 @@ func user_set_stones (s *stones) *stones {
             continue
         } else {
             // set
-            s[i-1][j-1] = 1
-            return s
+            return i-1, j-1
         }
     }
 }
