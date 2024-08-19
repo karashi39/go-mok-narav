@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "strings"
 )
 
 func clear_row () {
@@ -9,27 +10,50 @@ func clear_row () {
     fmt.Print("\033[1A\033[K")
 }
 
-func display_board (s *stones) {
-    y_index := []string{"１","２","３","４","５","６","７","８","９"}
-    stone := []string {"＋", "⚪︎", "⚫︎"}
+type display struct {
+    lines [12]string
+    stone []string
+    index []string
+}
 
-    for i := 0; i < 9; i++ {
+func (d *display) init(s *stones) {
+    stone := []string {"＋", "⚪︎", "⚫︎"}
+    index := []string{"１","２","３","４","５","６","７","８","９"}
+    d.index, d.stone = index, stone
+
+    for i:=0; i<len(d.lines); i++{
+        fmt.Println()
+    }
+
+    d.lines[0] = "二桁の番号を入力するのじゃ"
+    d.lines[1] = fmt.Sprintf("　 %s", strings.Join(index, " "))
+    for i := 2; i < 11; i++ {
+        d.lines[i] = fmt.Sprintf("%s ＋ ＋ ＋ ＋ ＋ ＋ ＋ ＋ ＋ ", d.index[i-2])
+    }
+    d._update()
+}
+
+func (d *display) _update() {
+    for i := 0; i < len(d.lines); i++{
         clear_row()
     }
-    for i := 0; i < 9; i++ {
-        fmt.Printf("%s ", y_index[i])
-        for j:= 1; j < 10; j++{
-            fmt.Printf("%s ", stone[s[i][j-1]])
-        }
-        fmt.Println()
+    for i := 0; i < len(d.lines); i++{
+        fmt.Println(d.lines[i])
     }
 }
 
-func first_board_display (s *stones) {
-    fmt.Println("二桁の番号を入力するのじゃ")
-    fmt.Println("　 １ ２ ３ ４ ５ ６ ７ ８ ９")
-    for i := 0; i < 9; i++ {
-        fmt.Println()
+func (d *display) update_board (s *stones) {
+    for i := 0; i < len(d.index); i++ {
+        line := fmt.Sprintf("%s", d.index[i])
+        for j:= 1; j < 10; j++{
+            line = fmt.Sprintf("%s %s", line, d.stone[s[i][j-1]])
+        }
+        d.lines[i+2] = line
     }
-    display_board(s)
+    d._update()
+}
+
+func (d *display) winner () {
+    d.lines[11] = "           YOU WIN"
+    d._update()
 }

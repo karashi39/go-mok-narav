@@ -6,22 +6,28 @@ import (
 
 func main() {
     s := new(stones)
-    first_board_display(s)
+    d := new(display)
+    d.init(s)
 
     var stone, i, j int
-    for t := 0; t < 40; t++{
+    for t := 0; t < 5; t++{
         //先攻
         stone = 1
         i, j = user_set_stones(s)
         update_stones(s,i,j,stone)
-        display_board(s)
+        d.update_board(s)
+
+        time.Sleep(1 * time.Second)
+        if t == 4 {
+            break
+        }
 
         //後攻
         stone = 2 //後攻
-        time.Sleep(1 * time.Second)
         i, j = com_set_stones(s)
         update_stones(s,i,j,stone)
-        display_board(s)
+        d.update_board(s)
     }
+    d.winner()
 }
 
