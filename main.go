@@ -87,20 +87,15 @@ func user_set_stones (stones [][]int) [][]int {
         fmt.Scanln(&input)
         fmt.Print("\033[1A\033[K")
 
+        // validation
         if value, err := strconv.Atoi(input); err != nil {
             // check type
             continue
-        } else if value < 11 {
+        } else if !(10 < value && value < 100) {
             // check length
             continue
-        } else if value > 99 {
-            // check length
-            continue
-        } else if i := value % 10; i == 0 {
-            // check i not 0
-            continue
-        } else if j := int(value/10); j == 0 {
-            // check j not 0
+        } else if i, j := value%10, int(value/10); i*j == 0 {
+            // check both i and j are not 0
             continue
         } else if stones[i-1][j-1] != 0 {
             // check already stone
