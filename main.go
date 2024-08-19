@@ -7,9 +7,14 @@ import (
     "strconv"
 )
 
+func clear_row () {
+    // stdoutのカーソルを1行上に戻す
+    fmt.Print("\033[1A\033[K")
+}
+
 func display (board [][]string) {
     for i :=0; i < len(board); i++ {
-        fmt.Print("\033[1A\033[K")
+        clear_row()
     }
     for i := 0; i < len(board); i++ {
         for j := 0; j < len(board[i]); j++ {
@@ -85,7 +90,7 @@ func user_set_stones (stones [][]int) [][]int {
     for {
         // input
         fmt.Scanln(&input)
-        fmt.Print("\033[1A\033[K")
+        clear_row()
 
         // validation
         if value, err := strconv.Atoi(input); err != nil {
