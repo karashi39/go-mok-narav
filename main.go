@@ -9,25 +9,30 @@ func main() {
     d := new(display)
     d.init(s)
 
-    var stone, i, j int
+    var i, j, p int
     for t := 0; t < 5; t++{
         //先攻
-        stone = 1
+        p = 1
         i, j = user_set_stones(s)
-        update_stones(s,i,j,stone)
+        s.update(i,j,p)
         d.update_board(s)
 
         time.Sleep(1 * time.Second)
-        if t == 4 {
+
+        if s.judge(p) {
+            d.winner()
             break
         }
 
         //後攻
-        stone = 2 //後攻
+        p = 2 //後攻
         i, j = com_set_stones(s)
-        update_stones(s,i,j,stone)
+        s.update(i,j,p)
         d.update_board(s)
+        if s.judge(p) {
+            d.loser()
+            break
+        }
     }
-    d.winner()
 }
 

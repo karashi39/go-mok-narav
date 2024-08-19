@@ -57,3 +57,8 @@ func (d *display) winner () {
     d.lines[11] = "           YOU WIN"
     d._update()
 }
+
+func (d *display) loser () {
+    d.lines[11] = "           YOU LOSE"
+    d._update()
+}
