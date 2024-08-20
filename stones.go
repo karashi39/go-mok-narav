@@ -17,26 +17,41 @@ func (s *stones) judge (p int) bool{
     win_pattern := strings.Repeat(strconv.Itoa(p), 5)
 
     // 横方向の判定
+    var horizontal string
     for _, line := range s{
-        var line_str string
         for _, num := range line {
-            line_str = fmt.Sprintf("%s%d", line_str, num)
+             horizontal= fmt.Sprintf("%s%d", horizontal, num)
         }
-        if match, _ := regexp.MatchString(win_pattern,line_str); match {
-            return true
-        }
+    }
+    if match, _ := regexp.MatchString(win_pattern,horizontal); match {
+        return true
     }
 
     // 縦方向の判定
+    var vertical string
     for j:=0; j < len(s[0]); j++{
-        var line_str string
         for i:=0; i < len(s); i++{
-            line_str = fmt.Sprintf("%s%d", line_str, s[i][j])
-        }
-        if match, _ := regexp.MatchString(win_pattern,line_str); match {
-            return true
+            vertical = fmt.Sprintf("%s%d", vertical, s[i][j])
         }
     }
+    if match, _ := regexp.MatchString(win_pattern,vertical); match {
+        return true
+    }
+
     // 斜め方向の判定
+    var oblique string
+    for i:= -4; i<5; i++{
+        for j:=0; j<len(s[0]); j++{
+            if i + j < 0 || 8 < i + j  {
+                continue
+            } else {
+                oblique = fmt.Sprintf("%s%d", oblique, s[i+j][j])
+            }
+        }
+    }
+    if match, _ := regexp.MatchString(win_pattern,oblique); match {
+        return true
+    }
+
     return false
 }

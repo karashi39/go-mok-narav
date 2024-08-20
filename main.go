@@ -10,7 +10,7 @@ func main() {
     d.init(s)
 
     var i, j, p int
-    for t := 0; t < 5; t++{
+    for t := 0; t < 40; t++{
         //先攻
         p = 1
         i, j = user_set_stones(s)
