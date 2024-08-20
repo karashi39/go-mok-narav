@@ -22,12 +22,21 @@ func (s *stones) judge (p int) bool{
         for _, num := range line {
             line_str = fmt.Sprintf("%s%d", line_str, num)
         }
-        match, _ := regexp.MatchString(win_pattern,line_str)
-        if match {
+        if match, _ := regexp.MatchString(win_pattern,line_str); match {
             return true
         }
     }
+
     // 縦方向の判定
+    for j:=0; j < len(s[0]); j++{
+        var line_str string
+        for i:=0; i < len(s); i++{
+            line_str = fmt.Sprintf("%s%d", line_str, s[i][j])
+        }
+        if match, _ := regexp.MatchString(win_pattern,line_str); match {
+            return true
+        }
+    }
     // 斜め方向の判定
     return false
 }
